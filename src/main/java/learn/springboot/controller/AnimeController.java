@@ -1,6 +1,7 @@
 package learn.springboot.controller;
 
 import learn.springboot.domain.Anime;
+import learn.springboot.serivce.AnimeService;
 import learn.springboot.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,15 +14,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("anime") //localhost:8080/anime
+@RequestMapping("animes") //localhost:8080/anime
 @Log4j2
-@RequiredArgsConstructor // Essa annotation inicia todsas as variaveis "final"
+@RequiredArgsConstructor
 public class AnimeController {
     private final DateUtil dateUtil;
+    private final AnimeService animeService;
     @GetMapping("list")
     public List<Anime> list() {
 
         log.info("AnimeController/(GET)list -> " + dateUtil.formatLocalToDbDateTime(LocalDateTime.now()));
-        return List.of(new Anime("DBZ"), new Anime("Berserk"));
+
+        return animeService.listAll();
     }
 }
